@@ -217,7 +217,37 @@ class FastSAMPrompt:
             os.makedirs(path)
         result = result[:, :, ::-1]
         cv2.imwrite(output_path, result)
-     
+    
+    def plot_only(self,
+             annotations,
+             output_path,
+             bboxes=None,
+             points=None,
+             point_label=None,
+             mask_random_color=True,
+             better_quality=True,
+             retina=False,
+             withContours=True):
+        if len(annotations) == 0:
+            return None
+        result = self.plot_to_result(
+            annotations, 
+            bboxes, 
+            points, 
+            point_label, 
+            mask_random_color,
+            better_quality, 
+            retina, 
+            withContours,
+        )
+
+        path = os.path.dirname(os.path.abspath(output_path))
+        if not os.path.exists(path):
+            os.makedirs(path)
+        result = result[:, :, ::-1]
+        # cv2.imwrite(output_path, result)
+        return result
+        
     #   CPU post process
     def fast_show_mask(
         self,
